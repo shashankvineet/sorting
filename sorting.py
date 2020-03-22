@@ -61,7 +61,16 @@ def _merged(xs, ys, cmp=cmp_standard):
             sorted_list.append(ys[j])
             j += 1
 
-    sorted_list = sorted_list + xs[i:] + ys[j:]
+    if i == l1 and j == l2:
+        return sorted_list
+    elif i == l1:
+        for x in range(j,l2):
+            sorted_list.append(ys[x])
+        return sorted_list
+    elif j == l2:
+        for x in range(i,l1):
+            sorted_list.append(xs[x])
+        return sorted_list
 
 
 def merge_sorted(xs, cmp=cmp_standard):
@@ -84,8 +93,8 @@ def merge_sorted(xs, cmp=cmp_standard):
         return xs
     else:
         center = len(xs)//2
-        left = xs[:middle]
-        right = xs[middle:]
+        left = xs[:center]
+        right = xs[center:]
 
         merge_sorted(left, cmp=cmp)
         merge_sorted(right, cmp=cmp)
