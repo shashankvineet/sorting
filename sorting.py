@@ -47,6 +47,22 @@ def _merged(xs, ys, cmp=cmp_standard):
     Runs in linear time.
     '''
 
+    l1 = len(xs)
+    l2 = len(ys)
+
+    sorted_list = []
+    i, j = 0, 0
+
+    while i < l1 and j < l2:
+        if xs[i] < ys[j]:
+            sorted_list.append(xs[i])
+            i += 1
+        else:
+            sorted_list.append(ys[j])
+            j += 1
+
+    sorted_list = sorted_list + xs[i:] + ys[j:]
+
 
 def merge_sorted(xs, cmp=cmp_standard):
     '''
@@ -63,6 +79,18 @@ def merge_sorted(xs, cmp=cmp_standard):
 
     You should return a sorted version of the input list xs
     '''
+
+    if len(xs) <= 1:
+        return xs
+    else:
+        center = len(xs)//2
+        left = xs[:middle]
+        right = xs[middle:]
+
+        merge_sorted(left, cmp=cmp)
+        merge_sorted(right, cmp=cmp)
+
+        return _merged(merge_sorted(left, cmp=cmp), merge_sorted(right, cmp=cmp))
 
 
 def quick_sorted(xs, cmp=cmp_standard):
